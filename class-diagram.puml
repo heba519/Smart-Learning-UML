@@ -1,0 +1,81 @@
+@startuml
+
+' =====================
+' Base Class
+' =====================
+class User {
+  - id: int
+  - name: string
+  - email: string
+  + login()
+  + logout()
+}
+
+' =====================
+' Inheritance
+' =====================
+class Student {
+  - enrolledCourses: List<Course>
+  + enroll(course)
+  + takeQuiz(quiz)
+  + viewCertificate()
+}
+
+class Instructor {
+  - coursesCreated: List<Course>
+  + createCourse()
+  + addLesson()
+  + createQuiz()
+}
+
+class Admin {
+  + manageUsers()
+  + approveCourse()
+}
+
+User <|-- Student
+User <|-- Instructor
+User <|-- Admin
+
+' =====================
+' Core Classes
+' =====================
+class Course {
+  - courseId: int
+  - title: string
+  + addLesson()
+  + addQuiz()
+}
+
+class Lesson {
+  - lessonId: int
+  - content: string
+  + displayContent()
+}
+
+class Quiz {
+  - quizId: int
+  - questions: List<String>
+  + evaluate()
+}
+
+class Certificate {
+  - certificateId: int
+  - studentName: string
+  - courseName: string
+  + generate()
+}
+
+' =====================
+' Relationships
+' =====================
+
+Student "many" -- "many" Course : enrolls
+Instructor "1" -- "many" Course : creates
+
+Course *-- Lesson
+Course *-- Quiz
+
+Student o-- Certificate
+
+@enduml

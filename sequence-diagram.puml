@@ -1,0 +1,32 @@
+@startuml
+
+actor Student
+participant Course
+participant Quiz
+participant Certificate
+
+== Enrollment ==
+
+Student -> Course : enroll(course)
+Course --> Student : enrollment confirmed
+
+== Quiz Attempt ==
+
+Student -> Quiz : startQuiz()
+Quiz --> Student : display questions
+
+Student -> Quiz : submit answers
+Quiz -> Quiz : evaluate answers
+
+Quiz --> Student : result
+
+== Certificate ==
+
+alt Passed
+    Quiz -> Certificate : generate()
+    Certificate --> Student : certificate issued
+else Failed
+    Quiz --> Student : no certificate
+end
+
+@enduml
